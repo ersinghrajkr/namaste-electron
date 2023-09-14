@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head> </head>
+	<body>
+		<h1>Video Info</h1>
+		<form>
+			<div>
+				<label>Select a Video</label>
+				<input type="file" name="video-file" , placeholder="Select a file" accept="video/*" />
+			</div>
+			<button onsubmit="">Get Info</button>
+		</form>
+        <h2 id="videoLength"></h2>
+		<script>
+			const electron = require("electron");
+			const { ipcRenderer } = electron;
+			const video = document.querySelector("form").addEventListener("submit", () => {
+				event.preventDefault();
+
+				const file = document.querySelector("input").files[0];
+				console.log(file);
+				ipcRenderer.send("videoSubmitted", file.path);
+			});
+
+			ipcRenderer.on("submittedVideoDuration", (error, videoDuration) => {
+				console.log("Video Duration: ", videoDuration);
+                document.querySelector('#videoLength').innerHTML = `Video is ${videoDuration} seconds long!`
+			});
+		</script>
+	</body>
+</html>

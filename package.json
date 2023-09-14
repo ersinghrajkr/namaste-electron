@@ -1,0 +1,27 @@
+{
+  "name": "namaste-electron",
+  "version": "1.0.0",
+  "description": "Fundamentals of electron app for cross-platform desktop app",
+  "main": "./app/app.js",
+  "scripts": {
+    "test": "electron . --trace-warnings"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ersinghrajkr/namaste-electron.git"
+  },
+  "keywords": [
+    "Electron"
+  ],
+  "author": "Raj Kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ersinghrajkr/namaste-electron/issues"
+  },
+  "homepage": "https://github.com/ersinghrajkr/namaste-electron#readme",
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.17.12",
+    "electron": "^26.2.1",
+    "fluent-ffmpeg": "^2.1.2"
+  }
+}
