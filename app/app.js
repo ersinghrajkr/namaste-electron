@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron')
+const path = require("path");
 
 let mainWindow, addWindow;
 
@@ -7,8 +8,9 @@ app.on('ready', () => {
     mainWindow = new BrowserWindow({
         title: 'Todo App',
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, "preload.js")
         },
     })
     mainWindow.loadURL(`file://${__dirname}/main.html`);
@@ -27,14 +29,18 @@ function createAddWindow() {
         width: 350,
         height: 300,
         title: 'Add new Todo',
-        webPreferences: { nodeIntegration: true, contextIsolation: false },
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: `${__dirname}/preload.js`,
+        },
     })
     addWindow.loadURL(`file://${__dirname}/addTodo.html`);
     addWindow.on("closed", () => (addWindow = null));
 }
 
 ipcMain.on('todo:add', (event, todo) => {
-    mainWindow.webContents.send('todo:addToList', todo);
+    mainWindow.webContents.send('todo:add', todo);
     console.log(`${todo} added!`)
     addWindow.close()
 })

@@ -1,26 +1,26 @@
-<head> </head>
-<body>
-	<h1>My Todo's</h1>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Main</title>
+	</head>
+	<body>
+		<h1>My Todo's</h1>
+		<div>
+			<ul></ul>
+		</div>
+		<script>
+			const list = document.querySelector("ul");
 
-	<div>
-		<ul></ul>
-	</div>
-	<script>
-		const electron = require("electron");
-		const { ipcRenderer } = electron;
-		const list = document.querySelector("ul");
+			window.api.on("todo:add", (event, todo) => {
+				const li = document.createElement("li");
+				const text = document.createTextNode(todo);
+				li.appendChild(text);
+				list.appendChild(li);
+			});
 
-		ipcRenderer.on("todo:addToList", (event, todo) => {
-			console.log("TODO VALUES - ", todo);
-			const li = document.createElement("li");
-			const text = document.createTextNode(todo);
-			li.appendChild(text);
-			list.appendChild(li);
-			text = null
-		});
-
-		ipcRenderer.on("todo:clear", () => {
-			list.innerHTML = "";
-		});
-	</script>
-</body>
+			window.api.on("todo:clear", () => {
+				list.innerHTML = "";
+			});
+		</script>
+	</body>
+</html>
